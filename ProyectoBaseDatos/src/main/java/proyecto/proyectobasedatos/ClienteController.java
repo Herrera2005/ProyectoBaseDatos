@@ -47,6 +47,7 @@ public class ClienteController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         cliente=App.cliente;
+        
         CargarOrdenes();
         
         // TODO
@@ -132,7 +133,7 @@ public class ClienteController implements Initializable {
     @FXML
     private void cargarPaginaOrdenes(ActionEvent e){
         try {
-            App.setRoot("ordenar");
+            App.setRoot("ordenar","Ordenar el pedido");
         } catch (IOException ioe) {
             ioe.printStackTrace();
         }

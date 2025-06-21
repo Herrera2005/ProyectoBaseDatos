@@ -3,6 +3,7 @@ proyecto\proyectobasedatos\EmpleadoController$1.class
 proyecto\proyectobasedatos\OrdenarController.class
 clases\Orden.class
 clases\Empleado.class
+proyecto\proyectobasedatos\CrearCuentaEmpleadoController.class
 clases\Comida.class
 proyecto\proyectobasedatos\App.class
 module-info.class
@@ -10,5 +11,6 @@ proyecto\proyectobasedatos\EmpleadoController.class
 proyecto\proyectobasedatos\InicioSecionController.class
 clases\Cliente.class
 proyecto\proyectobasedatos\ClienteController$1.class
+clases\RolEmpleado.class
 proyecto\proyectobasedatos\CrearCuentaController.class
 proyecto\proyectobasedatos\OrdenarController$1.class

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="proyecto.proyectobasedatos.CrearCuentaEmpleadoController">
+   <children>
+      <Label layoutX="30.0" layoutY="36.0" text="Crear cuenta de Empleados">
+         <font>
+            <Font name="Berlin Sans FB" size="20.0" />
+         </font>
+      </Label>
+      <Label layoutX="30.0" layoutY="79.0" text="Nombres" />
+      <Label layoutX="300.0" layoutY="79.0" text="Apellidos" />
+      <Label layoutX="300.0" layoutY="152.0" text="N° de cedula" />
+      <Label layoutX="30.0" layoutY="152.0" text="Correo - Usuario" />
+      <Label layoutX="30.0" layoutY="227.0" text="Contraseña" />
+      <ComboBox fx:id="rolComboBox" layoutX="300.0" layoutY="244.0" prefWidth="150.0" promptText="Elegir Rol" />
+      <Label layoutX="300.0" layoutY="227.0" text="Rol Asignado" />
+      <TextField fx:id="nombresText" layoutX="30.0" layoutY="93.0" promptText="Escribir Nombres" />
+      <TextField fx:id="apellidosText" layoutX="295.0" layoutY="93.0" promptText="Escribir Apellidos" />
+      <TextField fx:id="correoText" layoutX="30.0" layoutY="169.0" promptText="Escribir Correo personal" />
+      <TextField fx:id="cedulaText" layoutX="301.0" layoutY="169.0" promptText="Escribir N° de Cedula" />
+      <TextField fx:id="contraseniaText" layoutX="30.0" layoutY="244.0" promptText="Escribir contraseña" />
+      <Button layoutX="258.0" layoutY="309.0" mnemonicParsing="false" onAction="#crearCuenta" text="Crear Cuenta" />
+   </children>
+</AnchorPane>

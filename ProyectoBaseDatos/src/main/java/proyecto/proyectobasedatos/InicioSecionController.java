@@ -73,14 +73,14 @@ public class InicioSecionController implements Initializable {
                             if (categoria.equals("CLI")) {
                                 try {
                                     App.cliente=generarCliente(usuario,idusuario);
-                                    App.setRoot("cliente");
+                                    App.setRoot("cliente","Pagina de clientes");
                                 } catch (IOException ioe) {
                                     ioe.printStackTrace();
                                 }   
                             }else{
                                 App.empleado = generarEmpleado(usuario,idusuario);
                                 try {
-                                    App.setRoot("empleado");
+                                    App.setRoot("empleado","Pagina de empleados");
                                 } catch (IOException ioe) {
                                     ioe.printStackTrace();
                                 }   
@@ -104,7 +104,7 @@ public class InicioSecionController implements Initializable {
     @FXML
     private void actionCrearCuenta(ActionEvent e) {
         try {
-            App.setRoot("crearCuenta");
+            App.setRoot("crearCuenta","Crear cuenta para CLientes");
         } catch (IOException ioe) {
             ioe.printStackTrace();
         }
@@ -131,9 +131,9 @@ public class InicioSecionController implements Initializable {
     private Empleado generarEmpleado(String usuario, String idUsuario){
         String query ="select * from empleado where correo = ?";
         try (PreparedStatement ps = conexion.prepareStatement(query)) {
-                ps.setString(1, usuario);
-                try (ResultSet rs = ps.executeQuery()) {
-                    if (rs.next()) {
+            ps.setString(1, usuario);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
                         String cedula = rs.getString("cedula");
                         String rol = rs.getString("rol");
                         String nombre = rs.getString("nombre");
@@ -144,9 +144,9 @@ public class InicioSecionController implements Initializable {
                         return empleado;
                     }
                 }
-            } catch (SQLException ex) {
-                ex.printStackTrace();
-            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
         return null;
     }
     private static void mostrarAlerta(String titulo,String contenido ){

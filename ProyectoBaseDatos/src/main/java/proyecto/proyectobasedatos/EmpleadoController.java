@@ -6,6 +6,7 @@ package proyecto.proyectobasedatos;
 
 import clases.Empleado;
 import clases.Orden;
+import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -14,8 +15,11 @@ import java.sql.SQLException;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
@@ -38,16 +42,49 @@ public class EmpleadoController implements Initializable {
     private ListView<Orden> listaOrdenes;
     @FXML
     private Label nombreText;
+    
+    @FXML
+    private Stage detailStage;
+    
+    @FXML
+    private HBox hBoxAdm;
+    
+    private int idOrden;
+    private Label estadoLabel;
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        
         empleado=App.empleado;
+        
+        System.out.println(empleado.getRol());
+        if(empleado.getRol().equals("ADM")){
+            javafx.scene.control.Button crearEmpleado= new javafx.scene.control.Button ("Crear Cuenta Empleado");
+            javafx.scene.control.Button admEmpleados= new javafx.scene.control.Button ("Gestion de empleados");
+            crearEmpleado.setOnAction(event ->{
+                CrearCuentaEmpleado();
+            });
+            hBoxAdm.getChildren().addAll(crearEmpleado, admEmpleados);
+
+        }
         CargarOrdenes();
         // TODO
     }
-
+    private void CrearCuentaEmpleado(){
+        try{
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("crearCuentaEmpleado.fxml"));
+            Parent root =fxmlLoader.load();
+            
+            Stage stage = new Stage();
+            stage.setTitle("Crear Cuenta para Empleados");
+            stage.setScene(new Scene(root));
+            stage.show();
+        }catch(IOException ioe){
+            ioe.printStackTrace();
+        }
+    }
     private void CargarOrdenes(){
         nombreText.setText(empleado.getNombre()+ " "+ empleado.getApellido());
         String query = "select * from orden ";
@@ -65,6 +102,7 @@ public class EmpleadoController implements Initializable {
                     String hora = rs.getTime("hora").toString();
                     String descripcion = rs.getString("descripcion");
                     double precioTotal = rs.getDouble("precioTotal");
+                    idOrden=rs.getInt("id_orden");
                     Orden orden= new Orden(idCliente,nombre,apellido,fecha, hora, estado,descripcion, precioTotal);
                     ordenItems.add(orden);
                 }
@@ -95,7 +133,8 @@ public class EmpleadoController implements Initializable {
         }
     }
     private void mostrarDetallesOrden(Orden orden) {
-        Stage detailStage = new Stage();
+        detailStage = new Stage();
+        estadoLabel=new Label();
         VBox detailBox = new VBox();
         HBox hBox = new HBox();
         String descripcion ="";
@@ -112,16 +151,72 @@ public class EmpleadoController implements Initializable {
                 new javafx.scene.control.Label("ID Cliente: " + orden.getIdCliente()),
                 new javafx.scene.control.Label("       "+"Fecha: " + orden.getFecha()+ " "+orden.getHora())
         );
+        
+        estadoLabel.setText("Estado: " + orden.getEstado());
+        
         detailBox.getChildren().addAll(
                 hBox,
                 new javafx.scene.control.Label("Nombre: " + orden.getNombre()+" "+ orden.getApellido()),
-                new javafx.scene.control.Label("Estado: " + orden.getEstado()),
+                estadoLabel,
                 new javafx.scene.control.Label("Descripción: " +"\n"+ descripcion),
                 new javafx.scene.control.Label("Precio Total: $" + orden.getPrecioTotal())
+                
         );
-
+        javafx.scene.control.Button cambiarEstado= new javafx.scene.control.Button ("Cambiar estado");
+        cambiarEstado.setOnAction(event->{
+            cambiarEstadoOrden(orden);
+        });
+        detailBox.getChildren().add(cambiarEstado);
         Scene detailScene = new Scene(detailBox, 300, 200);
         detailStage.setScene(detailScene);
         detailStage.show();
+    }
+    
+    private void cambiarEstadoOrden(Orden orden){
+        String nuevoEstado;
+        switch (orden.getEstado()) {
+            case "PENDIENTE":
+                nuevoEstado = "REALIZANDO";
+                break;
+            case "REALIZANDO":
+                nuevoEstado = "REALIZADO";
+                break;
+            default:
+                nuevoEstado = orden.getEstado();
+                break;
+        }
+
+        String query = "UPDATE orden SET estado = ? WHERE id_orden = ?";
+        try (PreparedStatement ps = conexion.prepareStatement(query)) {
+            ps.setString(1, orden.getEstado());
+            ps.setInt(2, idOrden);
+
+            int rowsAffected = ps.executeUpdate();
+
+            if (rowsAffected > 0) {
+                orden.setEstado(nuevoEstado);
+                System.out.println("Estado de la orden actualizado correctamente."+orden.getEstado());
+                estadoLabel .setText("Descripción: "+ nuevoEstado);
+                if (orden.getEstado().equals("REALIZADO")){
+                    detailStage.close();
+                }
+            } else {
+                System.out.println("No se encontró la orden o no se pudo actualizar.");
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        CargarOrdenes();
+    }
+
+    
+    
+    @FXML
+    private void PaginaOrden(ActionEvent e){
+        try {
+            App.setRoot("ordenar","Ordenar el pedido");
+        } catch (IOException ioe) {
+            ioe.printStackTrace();
+        }
     }
 }

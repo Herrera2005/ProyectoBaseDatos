@@ -63,6 +63,40 @@ public class Orden {
     public String getApellido() {
         return apellido;
     }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
+
+    public void setIdCliente(String idCliente) {
+        this.idCliente = idCliente;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public void setApellido(String apellido) {
+        this.apellido = apellido;
+    }
+
+    public void setFecha(String fecha) {
+        this.fecha = fecha;
+    }
+
+    public void setHora(String hora) {
+        this.hora = hora;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
+
+    public void setPrecioTotal(double precioTotal) {
+        this.precioTotal = precioTotal;
+    }
+    
+    
     @Override
     public String toString() {
         return String.format("Cliente: %s %s\nTotal a pagar: %s\nFecha: %s\nEstado: %s", nombre,apellido, precioTotal, fecha, estado);

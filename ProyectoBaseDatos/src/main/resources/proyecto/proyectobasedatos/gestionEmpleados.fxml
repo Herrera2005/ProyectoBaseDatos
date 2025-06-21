@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TreeTableColumn?>
+<?import javafx.scene.control.TreeTableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/21" fx:controller="proyecto.proyectobasedatos.GestionEmpleadosController">
+   <children>
+      <TreeTableView fx:id="treeTable" layoutX="29.0" layoutY="100.0" prefHeight="269.0" prefWidth="516.0">
+        <columns>
+          <TreeTableColumn fx:id="empleadoColumn" prefWidth="287.0" text="Empleado" />
+          <TreeTableColumn fx:id="eliminarColumn" prefWidth="117.0" text="Eliminar" />
+            <TreeTableColumn fx:id="editarColumn" prefWidth="111.0" text="Editar Informacion" />
+        </columns>
+      </TreeTableView>
+      <Label layoutX="29.0" layoutY="50.0" text="Gestion de Empleados">
+         <font>
+            <Font name="Berlin Sans FB" size="22.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>

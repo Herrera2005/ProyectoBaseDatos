@@ -216,12 +216,15 @@ public class OrdenarController implements Initializable {
             }
 
             String fxml;
+            String descripcion;
             if (App.empleado == null) {
                 fxml = "cliente";
+                descripcion= "Pagina de Cliente";
             } else {
                 fxml = "empleado";
+                descripcion = "Pagina de Empleado";
             }
-            App.setRoot(fxml);
+            App.setRoot(fxml, descripcion);
         
         } catch (SQLException eql) {
             eql.printStackTrace();
@@ -234,13 +237,16 @@ public class OrdenarController implements Initializable {
     @FXML
     private void CancelarOrden(){
         String fxml;
+        String descripcion;
         if (App.empleado==null){
             fxml="cliente";
+            descripcion= "Pagina de Cliente";
         }else {
             fxml="empleado";
+            descripcion = "Pagina de Empleado";
         }
         try{
-            App.setRoot(fxml);
+            App.setRoot(fxml, descripcion);
         }catch(IOException io){
             io.printStackTrace();
         }

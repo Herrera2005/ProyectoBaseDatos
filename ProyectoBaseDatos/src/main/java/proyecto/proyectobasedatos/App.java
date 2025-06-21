@@ -18,15 +18,20 @@ import java.sql.SQLException;
  */
 public class App extends Application {
     public static Connection conn;
-    private static Scene scene;
+    private static Stage stage;
     public static Cliente cliente;
     public static Empleado empleado;
     
     public static Connection getConnection() {
-        String url = "jdbc:postgresql://aws-0-us-west-1.pooler.supabase.com:6543/postgres";
-        String user = "postgres.itliefcisdanaikgbsww";
+        
+        String url = "jdbc:postgresql://aws-0-us-west-1.pooler.supabase.com:6543/postgres?user=postgres.itliefcisdanaikgbsww&";
+        String user = "ProyectoBaseDatos";
         String password = "VtRRE8qBRPwQ@$v";
-
+        /*
+        String url = "jdbc:postgresql://localhost:5432/DataBaseProyecto";
+        String user = "postgres";
+        String password = "criaherr";
+        */
         Connection connection = null;
         
         try{
@@ -41,23 +46,21 @@ public class App extends Application {
     }
 
     @Override
-    public void start(Stage stage) throws IOException {
-        scene = new Scene(loadFXML("inicioSecion"), 640, 480);
-        stage.setScene(scene);
-        stage.show();
+    public void start(Stage primaryStage) throws IOException {
+        stage = primaryStage;
+        setRoot("inicioSecion", "Pagina Principal - Inicio de secion");
     }
   
-     static void setRoot(String fxml) throws IOException {
-        scene.setRoot(loadFXML(fxml));
+    public static void setRoot(String fxml,String titulo) throws IOException {
+        FXMLLoader fxmlLoader =new FXMLLoader(App.class.getResource(fxml+".fxml"));
+        stage.setScene(new Scene(fxmlLoader.load()));
+        stage.setTitle(titulo);
+        stage.show();
     }
 
-    private static Parent loadFXML(String fxml) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource(fxml + ".fxml"));
-        return fxmlLoader.load();
-    }
 
     public static void main(String[] args) {
-        
+        conn= getConnection();
         while (conn ==null){
             conn= getConnection();
         }
